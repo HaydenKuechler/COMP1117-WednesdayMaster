@@ -79,6 +79,7 @@ public class Player : Character
 
     private void Jump()
     {
+        AudioManager.Instance.PlayJumpSFX();
         rBody.linearVelocity = new Vector2(rBody.linearVelocity.x, jumpForce);
         anim.SetTrigger("Jump");
 

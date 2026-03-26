@@ -1,0 +1,21 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenuManager : MonoBehaviour
+{
+    public void StartGame()
+    {
+        AudioManager.Instance.PlayLevelMusic();
+        SceneManager.LoadScene("Level");
+    }
+
+    public void QuitGame()
+    {
+        // Pre-processor Directives
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+}
