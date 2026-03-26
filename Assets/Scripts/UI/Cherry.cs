@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Cherry : MonoBehaviour
+/* public class Cherry : MonoBehaviour
 {
   public UnityEvent onCollected = new UnityEvent();
 
@@ -25,3 +25,4 @@ public class Cherry : MonoBehaviour
     }
 }
 
+*/
