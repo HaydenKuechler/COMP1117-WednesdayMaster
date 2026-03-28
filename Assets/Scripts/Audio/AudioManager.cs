@@ -51,9 +51,14 @@ public class AudioManager : MonoBehaviour
         PlayMusic(playlist.menuTheme);
     }
     */
+    
+    // ------------ MUSIC TRACKS --------------------------- //
     public void PlayMenuMusic() => PlayMusic(playlist.menuTheme);
     public void PlayLevelMusic() => PlayMusic(playlist.levelTheme);
+
+    // ------------ SOUND EFFECTS ---------------------------//
     public void PlayJumpSFX() => sfxSource.PlayOneShot(playlist.jump);
+
 
     private void PlayMusic(AudioClip clip)
     {
