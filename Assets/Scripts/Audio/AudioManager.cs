@@ -2,48 +2,72 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    // Singleton Pattern
+    // 1. Static access point
     public static AudioManager Instance;
 
-    [SerializeField] private AudioPlaylist playlist; // Drag MainPlaylist here
+    [Header("PlayList")]
+    [SerializeField] private AudioPlaylist playlist;
+
+    [Header("Music")]
+    [Tooltip("Playing looping background tracks")]
     [SerializeField] private AudioSource musicSource;
+
+    [Header("SFX")]
+    [Tooltip("Plays one-shot sound effects")]
     [SerializeField] private AudioSource sfxSource;
 
     private void Awake()
     {
-        if (Instance == null)
+        // Singleton Pattern Logic
+        // 2. Create the reference to the instance, if it hasn't been created yet!
+        if(Instance == null)
         {
+            // I'm the first one, I am THE instance
             Instance = this;
+
+            // Persist this across scenes. 
             DontDestroyOnLoad(gameObject);
         }
-        else 
-        { 
-            Destroy(gameObject); 
+        else
+        {
+            // If another audiomanager is trying to be created, destroy it.
+            Destroy(gameObject);
         }
     }
 
     private void Start()
     {
+        // Safety check!
         if (playlist != null && playlist.menuTheme != null)
         {
             PlayMenuMusic();
         }
     }
 
-    // --- MUSIC METHODS ---
+    /*
+    public void PlayMenuMusic()
+    {
+        PlayMusic(playlist.menuTheme);
+    }
+    */
+    
+    // ------------ MUSIC TRACKS --------------------------- //
     public void PlayMenuMusic() => PlayMusic(playlist.menuTheme);
     public void PlayLevelMusic() => PlayMusic(playlist.levelTheme);
 
+    // ------------ SOUND EFFECTS ---------------------------//
+    public void PlayJumpSFX() => sfxSource.PlayOneShot(playlist.jump);
+
+
     private void PlayMusic(AudioClip clip)
     {
-        if (musicSource.clip == clip) return;
+        if(musicSource.clip == clip)
+        {
+            return; // If I am playing the same clip, just return. Prevents restarting if already playing
+        }
+
         musicSource.clip = clip;
         musicSource.Play();
     }
-
-    // --- SFX METHODS (Static Access Points) ---
-    public void PlayClick() => sfxSource.PlayOneShot(playlist.buttonClick);
-    public void PlayJump() => sfxSource.PlayOneShot(playlist.jump);
-    public void PlayWalk() => sfxSource.PlayOneShot(playlist.walkStep);
-    public void PlayPickup() => sfxSource.PlayOneShot(playlist.pickupItem);
-    public void PlayStomp() => sfxSource.PlayOneShot(playlist.enemyStomp);
 }
