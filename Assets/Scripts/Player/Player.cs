@@ -83,7 +83,47 @@ public class Player : Character
     // --- Shared Logic Helpers ---
     public bool CheckGrounded()
     {
+<<<<<<< HEAD
         return Physics2D.OverlapCircle(groundCheck.position, data.groundCheckRadius, data.groundLayer);
+=======
+        rBody.linearVelocity = new Vector2(moveInput.x * MoveSpeed, rBody.linearVelocity.y);
+        FlipSprite(moveInput.x);
+    }
+
+    private void Jump()
+    {
+        AudioManager.Instance.PlayJumpSFX();
+        rBody.linearVelocity = new Vector2(rBody.linearVelocity.x, jumpForce);
+        anim.SetTrigger("Jump");
+
+        jumpsRemaining--;
+    }
+
+    private void CheckEnvironment()
+    {
+        bool wasGrounded = isGrounded;
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        // Reset jumps when the player lands
+        if(isGrounded && !wasGrounded)
+        {
+            jumpsRemaining = maxJumps;
+        }
+
+        // Safety: if the player walks off a lege without jumping.
+        // they should only have 1 jump left
+        if(!isGrounded && wasGrounded && jumpsRemaining == maxJumps)
+        {
+            jumpsRemaining--;
+        }
+    }
+
+    private void UpdateAnimations()
+    {
+        anim.SetFloat("HorizontalSpeed", Mathf.Abs(rBody.linearVelocity.x));
+        anim.SetFloat("VerticalVelocity", rBody.linearVelocity.y);
+        anim.SetBool("IsGrounded", isGrounded);
+>>>>>>> da3bfcd35ee3ed1fa93915d6fb3023b01cbe9aac
     }
 
     public override void TakeDamage(int amount)

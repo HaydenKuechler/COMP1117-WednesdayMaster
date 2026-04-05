@@ -1,20 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewAudioPlaylist", menuName = "Scriptable Objects/Audio/Playlist")]
+[CreateAssetMenu(fileName = "AudioPlaylist", menuName = "Scriptable Objects/AudioPlaylist")]
 public class AudioPlaylist : ScriptableObject
 {
     [Header("Music Tracks")]
     public AudioClip menuTheme;
     public AudioClip levelTheme;
 
-    [Header("UI Sounds")]
-    public AudioClip buttonClick;
-
-    [Header("Player Movement")]
-    public AudioClip walkStep;
+    [Header("Sound Effects")]
     public AudioClip jump;
-
-    [Header("Gameplay Events")]
-    public AudioClip pickupItem; // The cherry!
-    public AudioClip enemyStomp;
 }
